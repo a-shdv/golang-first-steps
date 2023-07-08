@@ -2,67 +2,49 @@ package main
 
 import (
 	"fmt"
+	"go-first-steps/structs"
+	"reflect"
 )
 
 func main() {
-	// map declaration
-	characteristics := make(map[string]int)
-	characteristics["age"] = 22
-	characteristics["weight"] = 80
-	characteristics["growth"] = 181
-
-	// or
-
-	//characteristics := map[string]int{
-	//	"age":    22,
-	//	"weight": 80,
-	//	"growth": 181,
-	//}
-
-	fmt.Println(characteristics)
-
-	fmt.Println()
-
-	// get element by key
-	age := characteristics["age"]
-	fmt.Println(age)
-
-	fmt.Println()
-
-	// check if element exists
-	weight, exists := characteristics["weight"]
-	if exists {
-		fmt.Println(weight)
-	} else {
-		panic("Element does not exist!")
+	// struct initialization
+	user := structs.User{
+		Name:   "Tony",
+		Age:    22,
+		Gender: "male",
+		Weight: 80.24,
+		Height: 181.44,
 	}
 
+	// print struct
+	user.PrintUserInfo()
+	user.PrintUserInfoWithPointer("unknown")
+	user.PrintUserInfo()
+
 	fmt.Println()
 
-	// iterate through map
-	for key, value := range characteristics {
-		fmt.Println(key, value)
+	fmt.Printf("%+v\n\n", user)
+
+	// Receiver by value and by reference
+	fmt.Printf("Name: %s\n", user.GetName())   // value
+	user.SetName("Tony")                       // reference
+	fmt.Printf("Name: %s\n\n", user.GetName()) // value
+
+	// Receiver by value and by reference
+	fmt.Printf("Name: %s\n", user.GetName()) // value
+	user.SetNameByValue("Unknown")           // value (makes a copy), hence, doesn't change the actual value
+	fmt.Printf("Name: %s\n", user.GetName()) // value
+
+	// type conversion
+	anotherUser := structs.User{
+		Name:   "Alien",
+		Age:    5,
+		Gender: "unknown",
+		Weight: 80.24,
+		Height: 181.44,
 	}
-
-	fmt.Println()
-
-	// add element to map
-	characteristics["salary"] = 9999
-	fmt.Println(characteristics)
-
-	fmt.Println()
-
-	// replace element in map
-	characteristics["age"] = 54
-	fmt.Println(characteristics)
-
-	fmt.Println()
-
-	// delete element from map
-	delete(characteristics, "salary")
-	fmt.Println(characteristics)
-
-	// len(), cap()
-	fmt.Println("length of characteristics map:", len(characteristics))
-	// fmt.Println("cap of characteristics map:", cap(characteristics)) // error, map does not have capacity
+	isLegal := anotherUser.Age.IsLegal()
+	fmt.Println(isLegal)
+	fmt.Println(anotherUser.Age)
+	fmt.Println(reflect.TypeOf(anotherUser.Age))
 }
