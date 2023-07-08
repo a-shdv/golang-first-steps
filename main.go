@@ -1,88 +1,50 @@
 package main
 
-import (
-	"fmt"
-)
-
-// WORKS BEFORE main() FUNCTION
-func init() {
-	fmt.Print("\nCheck if init() function works\n")
-}
+import "fmt"
 
 func main() {
-	// 0
-	printSmth("Test...\n")
+	// POINTERS
+	a, b := 5, 10
+	fmt.Printf("before call a: %d, b: %d\n\n", a, b)
 
-	// 1
-	fmt.Println(calculateRectArea(5, 5), "\n")
+	changeValue(a, b)
+	fmt.Printf("changeValue() a: %d, b: %d\n", a, b)
 
-	// 2
-	test0 := explainSprintf("Tony", 22)
-	fmt.Println(test0 + "\n")
+	changeValueWithPointers(&a, &b)
+	fmt.Printf("changeValueWithPointers() a: %d, b: %d\n\n", a, b)
 
-	// 3
-	name, age := returnMultipleParameters("Tony", 22)
-	fmt.Println(name, age, "\n")
+	c := 15
+	checkMemAddress(&c)
 
-	// 4
-	fmt.Println(explainParams("Yeah, boy...", " It's me.\n"))
+	// ARRAYS
+	// 1-st option of an array declaration
+	var arr0 [2]int
+	arr0[0] = 1
+	arr0[1] = 2
+	// arr0[2] = 3 // error
 
-	// 5 - Closures
-	closure := increment()
-	fmt.Println(closure())
-	fmt.Println(closure())
-	fmt.Println(closure())
-	fmt.Println(closure())
+	// 2-nd option of an array declaration
+	arr1 := [6]int{2, 3, 5, 7, 11, 13}
+
+	fmt.Println("arr0: ", arr0)
+	fmt.Println("arr1: ", arr1)
+	fmt.Println()
 }
 
-// function declaration
-func printSmth(message string) {
-	fmt.Println(message)
+func changeValue(a int, b int) {
+	temp := a
+	a = b
+	b = temp
 }
 
-// function, returning something
-func calculateRectArea(a int, b int) int {
-	return a * b
+func changeValueWithPointers(a *int, b *int) {
+	temp := *a
+	*a = *b
+	*b = temp
 }
 
-// function Sprintf() explanation
-// this function generates a string and it can be placed to variable
-func explainSprintf(name string, age int) string {
-	return fmt.Sprintf("Hello, %s! Congratulations with %d years old!", name, age)
-}
-
-// function, returning multiple parameters
-func returnMultipleParameters(name string, age int) (string, bool) {
-	var result string
-	if age < 18 {
-		result = fmt.Sprintf("You are not legal yet.")
-		return result, false
-	}
-	//else if age >= 54 {
-	//	result = fmt.Sprintf("Easy there...")
-	//	return result, errors.New("Sorry, you are too old!")
-	//}
-	result = fmt.Sprintf("Welcome aboard!")
-	return result, true
-}
-
-// Params
-func explainParams(strings ...string) string {
-	var res string
-	//for i := 0; i < len(strings); i++ {
-	//	res += strings[i] + " "
-	//}
-	for i := range strings {
-		res += strings[i] + " "
-	}
-	return res
-}
-
-// Closure
-func increment() func() int {
-	var counter int
-	return func() int {
-		counter += 5
-		return counter
-	}
+func checkMemAddress(c *int) {
+	fmt.Println("memory address of the variable: ", c)
+	fmt.Println("memory address of the pointer", &c)
+	fmt.Println("value of the variable", *c)
 }
