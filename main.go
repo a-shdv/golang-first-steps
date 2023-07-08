@@ -2,77 +2,87 @@ package main
 
 import (
 	"fmt"
-	"reflect"
 )
 
+// WORKS BEFORE main() FUNCTION
+func init() {
+	fmt.Print("\nCheck if init() function works\n")
+}
+
 func main() {
-	// TYPE DECLARATIONS
-	{
-		// 1-st option to declare a variable
-		var message0 string
-		message0 = "Test..."
+	// 0
+	printSmth("Test...\n")
 
-		// 2-nd option to declare a variable
-		message1 := "Test..."
+	// 1
+	fmt.Println(calculateRectArea(5, 5), "\n")
 
-		fmt.Println("message0: " + message0)
-		fmt.Println("message1: " + message1)
-		fmt.Println()
+	// 2
+	test0 := explainSprintf("Tony", 22)
+	fmt.Println(test0 + "\n")
 
-		// null value
-		var message2 int
-		fmt.Print("message2: ")
-		fmt.Println(message2) // returns 0
-		fmt.Println()
+	// 3
+	name, age := returnMultipleParameters("Tony", 22)
+	fmt.Println(name, age, "\n")
 
-		// if you want to know the type of variable, then you can use reflect.TypeOf(var)
-		fmt.Print("type of message1: ")
-		fmt.Println(reflect.TypeOf(message1))
-		fmt.Println()
+	// 4
+	fmt.Println(explainParams("Yeah, boy...", " It's me.\n"))
 
-		// multiple initialization
-		a, b, c := 1, 2, 3
-		fmt.Printf("a: %d, b: %d, c: %d", a, b, c)
-		fmt.Println()
+	// 5 - Closures
+	closure := increment()
+	fmt.Println(closure())
+	fmt.Println(closure())
+	fmt.Println(closure())
+	fmt.Println(closure())
+}
 
-		// swap variables
-		a, b = b, a
-		fmt.Printf("a: %d, b: %d, c: %d\n", a, b, c)
-		fmt.Println()
+// function declaration
+func printSmth(message string) {
+	fmt.Println(message)
+}
+
+// function, returning something
+func calculateRectArea(a int, b int) int {
+	return a * b
+}
+
+// function Sprintf() explanation
+// this function generates a string and it can be placed to variable
+func explainSprintf(name string, age int) string {
+	return fmt.Sprintf("Hello, %s! Congratulations with %d years old!", name, age)
+}
+
+// function, returning multiple parameters
+func returnMultipleParameters(name string, age int) (string, bool) {
+	var result string
+	if age < 18 {
+		result = fmt.Sprintf("You are not legal yet.")
+		return result, false
 	}
+	//else if age >= 54 {
+	//	result = fmt.Sprintf("Easy there...")
+	//	return result, errors.New("Sorry, you are too old!")
+	//}
+	result = fmt.Sprintf("Welcome aboard!")
+	return result, true
+}
 
-	// BASIC TYPES
-	{
-		// byte
-		var bvar byte
-		bvar = 255 // 0..255
+// Params
+func explainParams(strings ...string) string {
+	var res string
+	//for i := 0; i < len(strings); i++ {
+	//	res += strings[i] + " "
+	//}
+	for i := range strings {
+		res += strings[i] + " "
+	}
+	return res
+}
 
-		// int
-		var ivar int
-		ivar = 1225
-
-		// float
-		var fvar float32
-		fvar = 12.25
-
-		// boolean
-		var boolvar bool
-		boolvar = true
-
-		// character
-		var rvar rune // the same as 'char' type
-		rvar = 'a'
-
-		// string
-		var svar string
-		svar = "abcdef..."
-
-		fmt.Println(bvar)
-		fmt.Println(ivar)
-		fmt.Println(fvar)
-		fmt.Println(boolvar)
-		fmt.Printf("char: %c, code: ", rvar) // the same as in C
-		fmt.Println(rvar)
-		fmt.Println(svar)
+// Closure
+func increment() func() int {
+	var counter int
+	return func() int {
+		counter += 5
+		return counter
 	}
 }
