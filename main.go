@@ -14,6 +14,7 @@ func main() {
 	fmt.Printf("changeValueWithPointers() a: %d, b: %d\n\n", a, b)
 
 	c := 15
+	fmt.Println("memory address before changeValueWithPointers() call (&c): ", &c)
 	checkMemAddress(&c)
 
 	// ARRAYS
@@ -26,7 +27,7 @@ func main() {
 	// 2-nd option of an array declaration
 	arr1 := [6]int{2, 3, 5, 7, 11, 13}
 
-	fmt.Println("arr0: ", arr0)
+	fmt.Println("\narr0: ", arr0)
 	fmt.Println("arr1: ", arr1)
 	fmt.Println()
 }
@@ -44,7 +45,7 @@ func changeValueWithPointers(a *int, b *int) {
 }
 
 func checkMemAddress(c *int) {
-	fmt.Println("memory address of the variable: ", c)
-	fmt.Println("memory address of the pointer", &c)
-	fmt.Println("value of the variable", *c)
+	fmt.Println("memory address of the variable (c): ", c)
+	fmt.Println("memory address of the pointer (&c):", &c)
+	fmt.Println("value of the variable (*c):", *c)
 }
