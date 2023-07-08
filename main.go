@@ -35,6 +35,18 @@ func main() {
 	} else {
 		fmt.Println(errMessage)
 	}
+
+	var tests []string
+	tests = append(tests, "test0")
+	tests = append(tests, "test1")
+	tests = append(tests, "test2")
+	tests = append(tests, "test3")
+	tests = append(tests, "test4")
+	tests = append(tests, "test5")
+	tests = append(tests, "test6")
+	tests = append(tests, "test7")
+
+	fmt.Println(tests[3:7]) // including 3, excluding 7
 }
 
 func isEmpty(str []string) (string, error) {
