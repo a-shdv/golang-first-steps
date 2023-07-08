@@ -1,51 +1,45 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 func main() {
-	// POINTERS
-	a, b := 5, 10
-	fmt.Printf("before call a: %d, b: %d\n\n", a, b)
+	// SLICE DECLARATION (no arr size presented)
+	// messages := []string{"1", "2", "3"}
+	// OR
+	// 1-st arg: slice type
+	// 2-nd arg: slice len
+	// 3-rd arg: slice capacity
+	messages := make([]string, 2, 5)
+	// messages := make([]string, 5) fills in the slice with 5 empty elements
+	messages[0] = "test0"
+	messages[1] = "test1"
+	// messages[2] = "test1" // error
 
-	changeValue(a, b)
-	fmt.Printf("changeValue() a: %d, b: %d\n", a, b)
+	// adds elements to the end of the slice
+	// and automatically increases 2x times slice capacity
+	messages = append(messages, "test2", "test3")
 
-	changeValueWithPointers(&a, &b)
-	fmt.Printf("changeValueWithPointers() a: %d, b: %d\n\n", a, b)
+	fmt.Println(messages)
+	fmt.Println("length: ", len(messages))
+	fmt.Println("capacity:", cap(messages))
 
-	c := 15
-	fmt.Println("memory address before changeValueWithPointers() call (&c): ", &c)
-	checkMemAddress(&c)
-
-	// ARRAYS
-	// 1-st option of an array declaration
-	var arr0 [2]int
-	arr0[0] = 1
-	arr0[1] = 2
-	// arr0[2] = 3 // error
-
-	// 2-nd option of an array declaration
-	arr1 := [6]int{2, 3, 5, 7, 11, 13}
-
-	fmt.Println("\narr0: ", arr0)
-	fmt.Println("arr1: ", arr1)
 	fmt.Println()
+
+	// ERROR HANDLING
+	errMessage, err := isEmpty(messages)
+	if err != nil {
+		fmt.Println(errMessage, err)
+	} else {
+		fmt.Println(errMessage)
+	}
 }
 
-func changeValue(a int, b int) {
-	temp := a
-	a = b
-	b = temp
-}
-
-func changeValueWithPointers(a *int, b *int) {
-	temp := *a
-	*a = *b
-	*b = temp
-}
-
-func checkMemAddress(c *int) {
-	fmt.Println("memory address of the variable (c): ", c)
-	fmt.Println("memory address of the pointer (&c):", &c)
-	fmt.Println("value of the variable (*c):", *c)
+func isEmpty(str []string) (string, error) {
+	if len(str) == 0 {
+		return "Error!", errors.New("Array is empty!")
+	}
+	return "Success!", nil
 }
