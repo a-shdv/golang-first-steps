@@ -1,45 +1,34 @@
 package main
 
-import (
-	"errors"
-	"fmt"
-)
+import "fmt"
 
 func main() {
-	// SLICE DECLARATION (no arr size presented)
-	// messages := []string{"1", "2", "3"}
-	// OR
-	// 1-st arg: slice type
-	// 2-nd arg: slice len
-	// 3-rd arg: slice capacity
-	messages := make([]string, 2, 5)
-	// messages := make([]string, 5) fills in the slice with 5 empty elements
-	messages[0] = "test0"
-	messages[1] = "test1"
-	// messages[2] = "test1" // error
+	// 2D array
+	matrix := make([][]int, 10)
 
-	// adds elements to the end of the slice
-	// and automatically increases 2x times slice capacity
-	messages = append(messages, "test2", "test3")
-
-	fmt.Println(messages)
-	fmt.Println("length: ", len(messages))
-	fmt.Println("capacity:", cap(messages))
-
-	fmt.Println()
-
-	// ERROR HANDLING
-	errMessage, err := isEmpty(messages)
-	if err != nil {
-		fmt.Println(errMessage, err)
-	} else {
-		fmt.Println(errMessage)
+	// C-like loops
+	for i := 0; i < len(matrix); i++ {
+		for j := 0; j < len(matrix); j++ {
+			matrix[j] = make([]int, 10) // allocate memory for inner slice
+		}
 	}
-}
 
-func isEmpty(str []string) (string, error) {
-	if len(str) == 0 {
-		return "Error!", errors.New("Array is empty!")
+	// Golang style
+	for i := range matrix {
+		for j := range matrix {
+			matrix[i][j] = j
+		}
 	}
-	return "Success!", nil
+
+	// While
+	//for true {
+	//	fmt.Println(matrix)
+	//}
+
+	fmt.Println(matrix)
+
+	// Key-value
+	for key, value := range matrix {
+		fmt.Println(key, value)
+	}
 }
