@@ -61,4 +61,8 @@ func main() {
 	// delete element from map
 	delete(characteristics, "salary")
 	fmt.Println(characteristics)
+
+	// len(), cap()
+	fmt.Println("length of characteristics map:", len(characteristics))
+	// fmt.Println("cap of characteristics map:", cap(characteristics)) // error, map does not have capacity
 }
